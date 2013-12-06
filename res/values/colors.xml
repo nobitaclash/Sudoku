@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="main_color">#0a5b7a</color>
+    <color name="sub_color">#33b5e5</color>
+    <color name="disable_color">#73a0b1</color>
+    <color name="text_color">#ffffff</color>
+    <color name="shadow_color">#000000</color>
+    <color name="bg_color">#eaf1f3</color>
+    <color name="touch_color">#f1f1ab</color>
+    <color name="background_color_readOnly">#c8f7ff</color>
+    <color name="select_color">#eeee22</color>
+</resources>

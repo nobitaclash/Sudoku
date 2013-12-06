@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:alwaysDrawnWithCache="true"
+    android:background="@color/bg_color"
+    android:orientation="horizontal"
+    android:padding="4dp" >
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/level"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:textColor="@color/main_color"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:textColor="@color/main_color"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/last_played"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:textColor="@color/main_color"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+    <pis.android.sudoku.gui.SudokuBoardView
+        android:id="@+id/sudoku_board"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:layout_gravity="center"
+        android:layout_marginRight="4sp" />
+
+</LinearLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/ic_refresh"
+        android:showAsAction="always"/>
+    <item
+        android:id="@+id/restart"
+        android:title="@string/restart"/>
+    <item
+        android:id="@+id/clear_all_notes"
+        android:title="@string/clear_all_notes"/>
+    <item
+        android:id="@+id/help"
+        android:title="@string/help"/>
+
+</menu>
