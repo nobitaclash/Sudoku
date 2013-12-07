@@ -109,7 +109,7 @@ public class SudokuPlayActivity extends Activity {
 		// create sudoku game instance
 		if (savedInstanceState == null) {
 			// activity runs for the first time, read game from database
-			int mSudokuGameID = getIntent().getIntExtra(
+			long mSudokuGameID = getIntent().getLongExtra(
 					SudokuPlayActivity.EXTRA_SUDOKU_ID, -1);
 			if (mSudokuGameID == -1) {
 				Random random = new Random();
@@ -240,7 +240,6 @@ public class SudokuPlayActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-
 		mDatabase.close();
 	}
 
@@ -262,7 +261,9 @@ public class SudokuPlayActivity extends Activity {
 
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.sudoku_play_menu, menu);
-		mRefreshItem = menu.findItem(R.id.refresh);
+		mRefreshGame = menu.findItem(R.id.refresh);
+		mNewGame = menu.findItem(R.id.newGame);
+		mRestart = menu.findItem(R.id.restart);
 		// Generate any additional actions that can be performed on the
 		// overall list. In a normal install, there are no additional
 		// actions found here, but this allows other applications to extend
@@ -281,9 +282,9 @@ public class SudokuPlayActivity extends Activity {
 		super.onPrepareOptionsMenu(menu);
 		// Pis Game chua start thi hien thi button refresh de doi sang game khac
 		if (mSudokuGame.getState() == SudokuGame.GAME_STATE_NOT_STARTED) {
-			mRefreshItem.setVisible(true);
+			enableMenuRefreshGame();
 		} else if (mSudokuGame.getState() == SudokuGame.GAME_STATE_PLAYING) {
-			mRefreshItem.setVisible(false);
+			disableMenuRefreshGame();
 		}
 		return true;
 	}
@@ -302,12 +303,15 @@ public class SudokuPlayActivity extends Activity {
 			return true;
 		case R.id.refresh:
 			// Chuyen sang game moi
-			Random random = new Random();
-			int nextgame = random.nextInt(1000);
-			mSudokuGame = mDatabase.getSudoku(nextgame);
-			mSudokuBoard.setGame(mSudokuGame);
+			createNewSudoku();
+			return true;
+		case R.id.newGame:
+			// Tao 1 game moi
+			createNewSudoku();
+			enableMenuRefreshGame();
 			return true;
 		}
+
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -440,7 +444,9 @@ public class SudokuPlayActivity extends Activity {
 	}
 
 	// ============= THEM VAO ===============
-	private MenuItem mRefreshItem;
+	private MenuItem mRefreshGame;
+	private MenuItem mNewGame;
+	private MenuItem mRestart;
 	private OnClickListener mUndoButtonClickListener = new OnClickListener() {
 
 		@Override
@@ -466,21 +472,40 @@ public class SudokuPlayActivity extends Activity {
 				if (mShowTime) {
 					mGameTimer.start();
 				}
-				mRefreshItem.setVisible(false);
+				mRefreshGame.setVisible(false);
 			}
 		}
 	};
 
+	private void createNewSudoku() {
+		Random random = new Random();
+		int nextgame = random.nextInt(1000);
+		mSudokuGame = mDatabase.getSudoku(nextgame);
+		mSudokuBoard.setGame(mSudokuGame);
+	}
+
+	private void enableMenuRefreshGame() {
+		mRefreshGame.setVisible(true);
+		mNewGame.setVisible(false);
+		mRestart.setVisible(false);
+	}
+
+	private void disableMenuRefreshGame() {
+		mRefreshGame.setVisible(false);
+		mNewGame.setVisible(true);
+		mRestart.setVisible(true);
+	}
+
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		finish();
 	}
+
 	@Override
 	public void finish() {
-		super.finish();
 		Bundle bundle = new Bundle();
 		onSaveInstanceState(bundle);
+		super.finish();
 	}
-	
+
 }
