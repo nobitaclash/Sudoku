@@ -355,7 +355,9 @@ public class SudokuDatabase {
 				long time = c.getLong(c.getColumnIndex(SudokuColumns.TIME));
 				String note = c.getString(c
 						.getColumnIndex(SudokuColumns.PUZZLE_NOTE));
-
+				// Pis them
+				long folderId = c.getLong(c
+						.getColumnIndex(SudokuColumns.FOLDER_ID));
 				s = new SudokuGame();
 				s.setId(id);
 				s.setCreated(created);
@@ -364,12 +366,14 @@ public class SudokuDatabase {
 				s.setState(state);
 				s.setTime(time);
 				s.setNote(note);
+				s.setFolderId(folderId); // Pis them vao
 			}
 		} finally {
 			if (c != null)
 				c.close();
 		}
-
+		System.out.println("Trungth - getSudoku end:="
+				+ s.getCells().toString());
 		return s;
 
 	}
@@ -648,10 +652,85 @@ public class SudokuDatabase {
 				SudokuColumns.LAST_PLAYED + " DESC");
 	}
 
+	public Cursor getSudokuCompleted(long folderId) {
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+		qb.setTables(SUDOKU_TABLE_NAME);
+		qb.appendWhere(SudokuColumns.STATE + "="
+				+ SudokuGame.GAME_STATE_COMPLETED);
+		qb.appendWhere(" and " + SudokuColumns.FOLDER_ID + "=" + folderId);
+		SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+		return qb.query(db, null, null, null, null, null, SudokuColumns.TIME
+				+ " ASC");
+	}
+
+	public Cursor getSudokuCompleted() {
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+		qb.setTables(SUDOKU_TABLE_NAME);
+		qb.appendWhere(SudokuColumns.STATE + "="
+				+ SudokuGame.GAME_STATE_COMPLETED);
+		SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+		return qb.query(db, null, null, null, null, null, null);
+	}
+
+	public Cursor getSudokuCompletedAndPlaying() {
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+		qb.setTables(SUDOKU_TABLE_NAME);
+		qb.appendWhere(SudokuColumns.STATE + "="
+				+ SudokuGame.GAME_STATE_COMPLETED);
+		qb.appendWhere(" and " + SudokuColumns.STATE + "="
+				+ SudokuGame.GAME_STATE_PLAYING);
+		SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+		return qb.query(db, null, null, null, null, null, null);
+	}
+
+	public Cursor getSudokuNotStarted(long folderId) {
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+		qb.setTables(SUDOKU_TABLE_NAME);
+		qb.appendWhere(SudokuColumns.STATE + "="
+				+ SudokuGame.GAME_STATE_NOT_STARTED);
+		qb.appendWhere(" and " + SudokuColumns.FOLDER_ID + "=" + folderId);
+		SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+		return qb.query(db, null, null, null, null, null, null);
+	}
+
+	public boolean isLevelClear(long folderId) {
+		Cursor cursor = null;
+		try {
+			cursor = getSudokuNotStarted(folderId);
+			if (cursor != null && cursor.getCount() > 0) {
+				return true;
+			}
+			return false;
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
+		}
+	}
+
 	public boolean hasResumeGame() {
 		Cursor cursor = null;
 		try {
 			cursor = getSudokuPlaying();
+			if (cursor != null && cursor.getCount() > 0) {
+				return true;
+			}
+			return false;
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
+		}
+	}
+
+	public boolean hasHighScore() {
+		Cursor cursor = null;
+		try {
+			cursor = getSudokuCompleted();
 			if (cursor != null && cursor.getCount() > 0) {
 				return true;
 			}

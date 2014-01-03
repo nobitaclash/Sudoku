@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pis="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:gravity="center|top"
+    android:orientation="vertical" >
+
+    <pis.android.sudoku.widget.TextViewWithFont
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dip"
+        android:layout_marginTop="30dip"
+        android:text="@string/new_game"
+        android:textColor="@color/main_color"
+        android:textSize="60dp"
+        pis:textFont="hlfants1.ttf" />
+
+    <pis.android.sudoku.widget.ButtonWithFont
+        android:id="@+id/beginner_level"
+        style="@style/ButtonMainStyle"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/beginner_level"
+        pis:textFont="hlcomic1.ttf" />
+
+    <pis.android.sudoku.widget.ButtonWithFont
+        android:id="@+id/easy_level"
+        style="@style/ButtonMainStyle"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:text="@string/easy_level"
+        pis:textFont="hlcomic1.ttf" />
+
+    <pis.android.sudoku.widget.ButtonWithFont
+        android:id="@+id/medium_level"
+        style="@style/ButtonMainStyle"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:text="@string/medium_level"
+        pis:textFont="hlcomic1.ttf" />
+
+    <pis.android.sudoku.widget.ButtonWithFont
+        android:id="@+id/hard_level"
+        style="@style/ButtonMainStyle"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:text="@string/hard_level"
+        pis:textFont="hlcomic1.ttf" />
+
+    <pis.android.sudoku.widget.ButtonWithFont
+        android:id="@+id/expert_level"
+        style="@style/ButtonMainStyle"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:text="@string/expert_level"
+        pis:textFont="hlcomic1.ttf" />
+
+    <pis.android.sudoku.widget.ButtonWithFont
+        android:id="@+id/legend_level"
+        style="@style/ButtonMainStyle"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:text="@string/legend_level"
+        pis:textFont="hlcomic1.ttf" />
+
+</LinearLayout>

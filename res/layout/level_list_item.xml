@@ -1,0 +1,10 @@
+<pis.android.sudoku.widget.TextViewWithFont xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pis="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/level"
+    android:layout_width="match_parent"
+    android:layout_height="60dip"
+    android:textColor="@color/main_color"
+    android:gravity="center"
+    android:background="@color/bg_color"
+    android:textSize="18dp"
+    pis:textFont="hlcomic1.ttf" />

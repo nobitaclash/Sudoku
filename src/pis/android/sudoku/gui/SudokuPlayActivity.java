@@ -20,8 +20,6 @@
 
 package pis.android.sudoku.gui;
 
-import java.util.Random;
-
 import pis.android.sudoku.R;
 import pis.android.sudoku.db.SudokuDatabase;
 import pis.android.sudoku.game.SudokuGame;
@@ -32,6 +30,7 @@ import pis.android.sudoku.gui.inputmethod.IMControlPanelStatePersister;
 import pis.android.sudoku.gui.inputmethod.IMNumpad;
 import pis.android.sudoku.gui.inputmethod.IMNumpad.OnUpdateStartGame;
 import pis.android.sudoku.utils.AndroidUtils;
+import pis.android.sudoku.utils.RandomSudoku;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -57,7 +56,7 @@ import android.widget.TextView;
 public class SudokuPlayActivity extends Activity {
 
 	public static final String EXTRA_SUDOKU_ID = "sudoku_id";
-
+	public static final String EXTRA_FODER_ID = "forder_id";
 	public static final int MENU_ITEM_RESTART = Menu.FIRST;
 	public static final int MENU_ITEM_CLEAR_ALL_NOTES = Menu.FIRST + 1;
 	public static final int MENU_ITEM_HELP = Menu.FIRST + 2;
@@ -71,6 +70,7 @@ public class SudokuPlayActivity extends Activity {
 	private static final int REQUEST_SETTINGS = 1;
 
 	private long mSudokuGameID;
+	private long mForderId;
 	private SudokuGame mSudokuGame;
 
 	private SudokuDatabase mDatabase;
@@ -88,6 +88,7 @@ public class SudokuPlayActivity extends Activity {
 	private GameTimeFormat mGameTimeFormatter = new GameTimeFormat();
 
 	private HintsQueue mHintsQueue;
+	private String[] mLevels;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -105,16 +106,12 @@ public class SudokuPlayActivity extends Activity {
 		mDatabase = new SudokuDatabase(getApplicationContext());
 		mHintsQueue = new HintsQueue(this);
 		mGameTimer = new GameTimer();
-
+		mLevels = getResources().getStringArray(R.array.sudoku_level);
 		// create sudoku game instance
 		if (savedInstanceState == null) {
 			// activity runs for the first time, read game from database
-			long mSudokuGameID = getIntent().getLongExtra(
+			mSudokuGameID = getIntent().getLongExtra(
 					SudokuPlayActivity.EXTRA_SUDOKU_ID, -1);
-			if (mSudokuGameID == -1) {
-				Random random = new Random();
-				mSudokuGameID = random.nextInt(1000);
-			}
 			mSudokuGame = mDatabase.getSudoku(mSudokuGameID);
 		} else {
 			// activity has been running before, restore its state
@@ -123,6 +120,7 @@ public class SudokuPlayActivity extends Activity {
 			mGameTimer.restoreState(savedInstanceState);
 		}
 
+		mForderId = mSudokuGame.getFolderId();
 		if (mSudokuGame.getState() == SudokuGame.GAME_STATE_NOT_STARTED) {
 			// Khong lam gi de nguoi dung co the refresh game khacs
 			// mSudokuGame.start();
@@ -133,13 +131,12 @@ public class SudokuPlayActivity extends Activity {
 		if (mSudokuGame.getState() == SudokuGame.GAME_STATE_COMPLETED) {
 			mSudokuBoard.setReadOnly(true);
 		}
+		mHintsQueue.showOneTimeHint("welcome", R.string.welcome,
+				R.string.first_run_hint);
 
 		mSudokuBoard.setGame(mSudokuGame);
 		mSudokuGame.setOnPuzzleSolvedListener(onSolvedListener);
 		mSudokuGame.setOnUndoListener(mOnUndoListener);
-
-		mHintsQueue.showOneTimeHint("welcome", R.string.welcome,
-				R.string.first_run_hint);
 
 		mIMControlPanel = (IMControlPanel) findViewById(R.id.input_methods);
 		mIMControlPanel.initialize(mSudokuBoard, mSudokuGame, mHintsQueue);
@@ -152,7 +149,7 @@ public class SudokuPlayActivity extends Activity {
 			ActionBar bar = getActionBar();
 			bar.setBackgroundDrawable(new ColorDrawable(getResources()
 					.getColor(R.color.main_color)));
-			bar.setTitle("Hard");
+			bar.setTitle(mLevels[(int) mForderId - 1]);
 		}
 	}
 
@@ -204,25 +201,6 @@ public class SudokuPlayActivity extends Activity {
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-
-		// if (hasFocus) {
-		// // FIXME: When activity is resumed, title isn't sometimes hidden
-		// // properly (there is black
-		// // empty space at the top of the screen). This is desperate
-		// // workaround.
-		// if (mFullScreen) {
-		// mGuiHandler.postDelayed(new Runnable() {
-		// @Override
-		// public void run() {
-		// getWindow()
-		// .clearFlags(
-		// WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-		// mRootLayout.requestLayout();
-		// }
-		// }, 1000);
-		// }
-		//
-		// }
 	}
 
 	@Override
@@ -264,6 +242,7 @@ public class SudokuPlayActivity extends Activity {
 		mRefreshGame = menu.findItem(R.id.refresh);
 		mNewGame = menu.findItem(R.id.newGame);
 		mRestart = menu.findItem(R.id.restart);
+		mClearAllNote = menu.findItem(R.id.clear_all_notes);
 		// Generate any additional actions that can be performed on the
 		// overall list. In a normal install, there are no additional
 		// actions found here, but this allows other applications to extend
@@ -296,10 +275,8 @@ public class SudokuPlayActivity extends Activity {
 			showDialog(DIALOG_RESTART);
 			return true;
 		case R.id.clear_all_notes:
-			showDialog(DIALOG_CLEAR_NOTES);
-			return true;
-		case R.id.help:
-			mHintsQueue.showHint(R.string.help, R.string.help_text);
+			// showDialog(DIALOG_CLEAR_NOTES);
+			mSudokuGame.fillInNotes();
 			return true;
 		case R.id.refresh:
 			// Chuyen sang game moi
@@ -342,7 +319,17 @@ public class SudokuPlayActivity extends Activity {
 					.setMessage(
 							getString(R.string.congrats, mGameTimeFormatter
 									.format(mSudokuGame.getTime())))
-					.setPositiveButton(android.R.string.ok, null).create();
+					.setPositiveButton(R.string.new_game,
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									createNewSudoku();
+								}
+							}).setNegativeButton(android.R.string.cancel, null)
+					.create();
+
 		case DIALOG_RESTART:
 			return new AlertDialog.Builder(this)
 					.setIcon(android.R.drawable.ic_menu_rotate)
@@ -401,6 +388,8 @@ public class SudokuPlayActivity extends Activity {
 		@Override
 		public void onPuzzleSolved() {
 			mSudokuBoard.setReadOnly(true);
+			// cap nhat database co sudoku da xong
+			mDatabase.updateSudoku(mSudokuGame);
 			showDialog(DIALOG_WELL_DONE);
 		}
 
@@ -447,6 +436,7 @@ public class SudokuPlayActivity extends Activity {
 	private MenuItem mRefreshGame;
 	private MenuItem mNewGame;
 	private MenuItem mRestart;
+	private MenuItem mClearAllNote;
 	private OnClickListener mUndoButtonClickListener = new OnClickListener() {
 
 		@Override
@@ -478,22 +468,36 @@ public class SudokuPlayActivity extends Activity {
 	};
 
 	private void createNewSudoku() {
-		Random random = new Random();
-		int nextgame = random.nextInt(1000);
-		mSudokuGame = mDatabase.getSudoku(nextgame);
+		// Save game cu lai
+		mDatabase.updateSudoku(mSudokuGame);
+		mSudokuGameID = RandomSudoku.getInstance().randomSudokuGame(this,
+				mForderId);
+		mSudokuGame = SudokuGame.createEmptyGame();
+		mSudokuGame = mDatabase.getSudoku(mSudokuGameID);
+		mSudokuBoard.setReadOnly(false);
 		mSudokuBoard.setGame(mSudokuGame);
+		mSudokuGame.setOnPuzzleSolvedListener(onSolvedListener);
+		mSudokuGame.setOnUndoListener(mOnUndoListener);
+		mIMControlPanel.initialize(mSudokuBoard, mSudokuGame, mHintsQueue);
+		mIMNumpad.reInitialize(this, mIMControlPanel, mSudokuGame,
+				mSudokuBoard, mHintsQueue);
+		mIMNumpad.setOnUpdateStartGame(mOnUpdateStartGame);
+		mIMNumpad.setUndoListener(mUndoButtonClickListener);
+		mIMNumpad.setEnableUndo(mSudokuGame.hasSomethingToUndo());
 	}
 
 	private void enableMenuRefreshGame() {
 		mRefreshGame.setVisible(true);
-		mNewGame.setVisible(false);
-		mRestart.setVisible(false);
+		mNewGame.setEnabled(false);
+		mRestart.setEnabled(false);
+		mClearAllNote.setEnabled(false);
 	}
 
 	private void disableMenuRefreshGame() {
 		mRefreshGame.setVisible(false);
-		mNewGame.setVisible(true);
-		mRestart.setVisible(true);
+		mNewGame.setEnabled(true);
+		mRestart.setEnabled(true);
+		mClearAllNote.setEnabled(true);
 	}
 
 	@Override

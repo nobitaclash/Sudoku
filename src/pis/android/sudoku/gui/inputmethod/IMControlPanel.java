@@ -73,7 +73,6 @@ public class IMControlPanel extends LinearLayout {
 
 		mGame = game;
 		mHintsQueue = hintsQueue;
-
 		createInputMethods();
 	}
 

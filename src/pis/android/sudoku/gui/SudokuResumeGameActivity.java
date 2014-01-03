@@ -41,6 +41,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -55,16 +56,7 @@ import android.widget.TextView;
  */
 public class SudokuResumeGameActivity extends ListActivity {
 
-	public static final String EXTRA_FOLDER_ID = "folder_id";
-
-	private static final String FILTER_STATE_NOT_STARTED = "filter"
-			+ SudokuGame.GAME_STATE_NOT_STARTED;
-	private static final String TAG = "SudokuListActivity";
-
-	private long mDeletePuzzleID;
-	private long mResetPuzzleID;
-	private long mEditNotePuzzleID;
-	private SudokuListFilter mListFilter;
+	private static final String TAG = "SudokuResumeGameActivity";
 
 	private SudokuResumeGameAdapter mAdapter;
 	private Cursor mCursor;
@@ -73,7 +65,7 @@ public class SudokuResumeGameActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.sudoku_list);
 		AndroidUtils.setupAdNetwork(this);
 
@@ -81,11 +73,6 @@ public class SudokuResumeGameActivity extends ListActivity {
 		setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
 
 		mDatabase = new SudokuDatabase(getApplicationContext());
-		final SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(getApplicationContext());
-		mListFilter = new SudokuListFilter(getApplicationContext());
-		mListFilter.showStateNotStarted = settings.getBoolean(
-				FILTER_STATE_NOT_STARTED, true);
 		AndroidUtils.setBackGroundActionBar(getApplicationContext(),
 				getActionBar());
 		updateList();
@@ -100,28 +87,8 @@ public class SudokuResumeGameActivity extends ListActivity {
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-
-		outState.putLong("mDeletePuzzleID", mDeletePuzzleID);
-		outState.putLong("mResetPuzzleID", mResetPuzzleID);
-		outState.putLong("mEditNotePuzzleID", mEditNotePuzzleID);
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle state) {
-		super.onRestoreInstanceState(state);
-
-		mDeletePuzzleID = state.getLong("mDeletePuzzleID");
-		mResetPuzzleID = state.getLong("mResetPuzzleID");
-		mEditNotePuzzleID = state.getLong("mEditNotePuzzleID");
-	}
-
-	@Override
 	protected void onResume() {
 		super.onResume();
-		// the puzzle list is naturally refreshed when the window
-		// regains focus, so we only need to update the title
 	}
 
 	@Override
@@ -146,13 +113,13 @@ public class SudokuResumeGameActivity extends ListActivity {
 		Intent i = new Intent(SudokuResumeGameActivity.this,
 				SudokuPlayActivity.class);
 		i.putExtra(SudokuPlayActivity.EXTRA_SUDOKU_ID, sudokuID);
+		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(i);
-		finish();
 	}
 
 	// ================================ Them vao =============================
 	private static class SudokuResumeGameAdapter extends CursorAdapter {
-
+		private String[] mLevels;
 		private Context mContext;
 		private GameTimeFormat mGameTimeFormatter = new GameTimeFormat();
 		private DateFormat mDateTimeFormatter = DateFormat.getDateTimeInstance(
@@ -165,6 +132,8 @@ public class SudokuResumeGameActivity extends ListActivity {
 			super(context, c);
 			mContext = context;
 			mLayoutInflater = LayoutInflater.from(context);
+			mLevels = context.getResources().getStringArray(
+					R.array.sudoku_level);
 		}
 
 		@Override
@@ -209,9 +178,10 @@ public class SudokuResumeGameActivity extends ListActivity {
 		}
 
 		private void setLevel(TextView textView, Cursor c) {
-			int folder = c.getInt(c.getColumnIndex(SudokuColumns.FOLDER_ID));
+			int folderId = c.getInt(c.getColumnIndex(SudokuColumns.FOLDER_ID));
+
 			textView.setText(mContext.getResources().getString(R.string.level,
-					"" + folder));
+					mLevels[folderId - 1]));
 		}
 
 		private void setTime(TextView textView, Cursor c) {

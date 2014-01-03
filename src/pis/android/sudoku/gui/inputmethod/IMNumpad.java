@@ -182,6 +182,9 @@ public class IMNumpad extends InputMethod {
 			Cell selCell = mSelectedCell;
 
 			if (selCell != null) {
+				if (mOnUpdateStartGame != null) {
+					mOnUpdateStartGame.onUpdateStartGame();
+				}
 				switch (mEditMode) {
 				case MODE_EDIT_NOTE:
 					if (selNumber == 0) {
@@ -195,6 +198,8 @@ public class IMNumpad extends InputMethod {
 					}
 					break;
 				case MODE_EDIT_VALUE:
+					System.out.println("Trungth - mNumberButtonClick "
+							+ mGame.getCells().toString());
 					if (selNumber >= 0 && selNumber <= 9) {
 						mGame.setCellValue(selCell, selNumber);
 						if (isMoveCellSelectionOnPress()) {
@@ -203,9 +208,7 @@ public class IMNumpad extends InputMethod {
 					}
 					break;
 				}
-				if (mOnUpdateStartGame != null) {
-					mOnUpdateStartGame.onUpdateStartGame();
-				}
+
 			}
 		}
 
@@ -276,7 +279,6 @@ public class IMNumpad extends InputMethod {
 		}
 	}
 
-
 	// thong bao cap nhat update game
 	public interface OnUpdateStartGame {
 		public void onUpdateStartGame();
@@ -286,5 +288,10 @@ public class IMNumpad extends InputMethod {
 
 	public void setOnUpdateStartGame(OnUpdateStartGame onUpdateStartGame) {
 		mOnUpdateStartGame = onUpdateStartGame;
+	}
+
+	public void reInitialize(Context context, IMControlPanel controlPanel,
+			SudokuGame game, SudokuBoardView board, HintsQueue hintsQueue) {
+		initialize(context, controlPanel, game, board, hintsQueue);
 	}
 }

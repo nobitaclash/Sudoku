@@ -128,7 +128,7 @@ public class SudokuBoardView extends View {
 		setSectorLineColor(a.getColor(
 				R.styleable.SudokuBoardView_sectorLineColor, Color.BLACK));
 		setTextColor(a.getColor(R.styleable.SudokuBoardView_textColor,
-				Color.BLACK));
+				getColor(context, R.color.main_color)));
 		setTextColorReadOnly(a.getColor(
 				R.styleable.SudokuBoardView_textColorReadOnly, Color.BLACK));
 		setTextColorNote(a.getColor(R.styleable.SudokuBoardView_textColorNote,
@@ -552,7 +552,6 @@ public class SudokuBoardView extends View {
 			canvas.drawRect(paddingLeft, y - sectorLineWidth1, width, y
 					+ sectorLineWidth2, mSectorLinePaint);
 		}
-
 	}
 
 	@Override
@@ -790,5 +789,4 @@ public class SudokuBoardView extends View {
 	//
 	// return modeString;
 	// }
-
 }

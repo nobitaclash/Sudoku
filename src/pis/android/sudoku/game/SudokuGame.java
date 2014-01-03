@@ -40,6 +40,7 @@ public class SudokuGame {
 	private int mState;
 	private long mTime;
 	private long mLastPlayed;
+	private long mFolderId; // Pis them vao
 	private String mNote;
 	private CellCollection mCells;
 
@@ -71,6 +72,7 @@ public class SudokuGame {
 		outState.putLong("created", mCreated);
 		outState.putInt("state", mState);
 		outState.putLong("time", mTime);
+		outState.putLong("folderId", mFolderId);// Pis them vao
 		outState.putLong("lastPlayed", mLastPlayed);
 		outState.putString("cells", mCells.serialize());
 		mCommandStack.saveState(outState);
@@ -82,6 +84,7 @@ public class SudokuGame {
 		mCreated = inState.getLong("created");
 		mState = inState.getInt("state");
 		mTime = inState.getLong("time");
+		mFolderId = inState.getLong("folderId");// Pis them vao
 		mLastPlayed = inState.getLong("lastPlayed");
 		mCells = CellCollection.deserialize(inState.getString("cells"));
 
@@ -119,6 +122,16 @@ public class SudokuGame {
 
 	public int getState() {
 		return mState;
+	}
+
+	// Pis them vao
+	public void setFolderId(long folderId) {
+		mFolderId = folderId;
+	}
+
+	// Pis them vao
+	public long getFolderId() {
+		return mFolderId;
 	}
 
 	/**
@@ -176,6 +189,7 @@ public class SudokuGame {
 	 * @param value
 	 */
 	public void setCellValue(Cell cell, int value) {
+		System.out.println("Trungth - setCellValue start:=" + getCells().toString());
 		if (cell == null) {
 			throw new IllegalArgumentException("Cell cannot be null.");
 		}
@@ -194,6 +208,7 @@ public class SudokuGame {
 				}
 			}
 		}
+		System.out.println("Trungth - setCellValue end:=" + getCells().toString());
 	}
 
 	/**

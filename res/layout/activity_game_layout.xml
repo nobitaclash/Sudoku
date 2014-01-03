@@ -36,6 +36,7 @@
         pis:textFont="hlcomic1.ttf" />
 
     <pis.android.sudoku.widget.ButtonWithFont
+        android:id="@+id/high_score"
         style="@style/ButtonMainStyle"
         android:layout_width="180dip"
         android:layout_height="wrap_content"
