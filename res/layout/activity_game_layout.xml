@@ -45,19 +45,22 @@
         pis:textFont="hlcomic1.ttf" />
 
     <pis.android.sudoku.widget.ButtonWithFont
+        android:id="@+id/howto"
         style="@style/ButtonMainStyle"
         android:layout_width="180dip"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dip"
-        android:text="@string/help"
+        android:text="@string/how_to"
         pis:textFont="hlcomic1.ttf" />
 
     <pis.android.sudoku.widget.ButtonWithFont
+        android:id="@+id/about"
         style="@style/ButtonMainStyle"
         android:layout_width="180dip"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dip"
         android:text="@string/about"
+        android:enabled="false"
         pis:textFont="hlcomic1.ttf" />
 
 </LinearLayout>

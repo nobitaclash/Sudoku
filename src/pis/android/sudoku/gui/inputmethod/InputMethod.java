@@ -65,7 +65,6 @@ public abstract class InputMethod {
 		mBoard = board;
 		mHintsQueue = hintsQueue;
 		mInputMethodName = this.getClass().getSimpleName();
-		System.out.println("Trungth - initialize end:=" + game.getCells().toString());
 	}
 	
 	public boolean isInputMethodViewCreated() {

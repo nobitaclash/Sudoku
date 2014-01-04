@@ -88,6 +88,7 @@ public class SudokuLevelActivity extends Activity implements OnClickListener {
 				.getInstance().randomSudokuGame(this, folderId));
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(i);
+		finish();
 	}
 
 	@Override

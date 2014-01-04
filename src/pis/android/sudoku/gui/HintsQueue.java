@@ -63,7 +63,7 @@ public class HintsQueue {
 			
 		});
 		mOneTimeHintsEnabled = gameSettings.getBoolean("show_hints", true);
-		
+		mOneTimeHintsEnabled = false; //Trungth Gan tam bang false
 		mHintDialog = new AlertDialog.Builder(context)
 			.setIcon(android.R.drawable.ic_menu_info_details)
 			.setTitle(R.string.hint)

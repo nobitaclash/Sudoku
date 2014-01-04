@@ -189,7 +189,6 @@ public class SudokuGame {
 	 * @param value
 	 */
 	public void setCellValue(Cell cell, int value) {
-		System.out.println("Trungth - setCellValue start:=" + getCells().toString());
 		if (cell == null) {
 			throw new IllegalArgumentException("Cell cannot be null.");
 		}
@@ -208,7 +207,6 @@ public class SudokuGame {
 				}
 			}
 		}
-		System.out.println("Trungth - setCellValue end:=" + getCells().toString());
 	}
 
 	/**
@@ -315,6 +313,7 @@ public class SudokuGame {
 		validate();
 		setTime(0);
 		setLastPlayed(0);
+		mCommandStack = new CommandStack(mCells); // Them vao
 		mState = GAME_STATE_NOT_STARTED;
 	}
 

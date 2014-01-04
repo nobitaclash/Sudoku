@@ -37,7 +37,7 @@
             android:layout_margin="3dip"
             android:layout_weight="1"
             android:background="@color/main_color"
-            android:text="Note"
+            android:text="@string/note"
             android:textColor="@color/text_color"
             android:textSize="20dp"
             pis:textFont="hlcomic1.ttf" />
@@ -70,7 +70,7 @@
         <pis.android.sudoku.widget.ButtonWithFont
             android:id="@+id/button_clear"
             style="@style/ButtonStyle"
-            android:text="Clear"
+            android:text="@string/clear"
             pis:textFont="hlcomic1.ttf" />
     </LinearLayout>
 
@@ -101,7 +101,7 @@
         <pis.android.sudoku.widget.ButtonWithFont
             android:id="@+id/undo"
             style="@style/ButtonStyle"
-            android:text="Undo"
+            android:text="@string/undo"
             pis:textFont="hlcomic1.ttf" />
     </LinearLayout>
 

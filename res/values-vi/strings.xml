@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Sudoku</string>
+    <string name="action_settings">Cài đặt</string>
+    <string name="hello_world">Xin chào!</string>
+    <string name="resume_game">Chơi tiếp</string>
+    <string name="new_game">Chơi mới</string>
+    <string name="hight_score">Điểm cao</string>
+    <string name="how_to">Cách chơi</string>
+    <string name="about">Giới thiệu</string>
+    <!--  -->
+    <string name="no_puzzles">Ko có sudoku</string>
+    <string name="one_puzzle">1 sudoku </string>
+    <string name="n_puzzles">%s sudoku</string>
+    <string name="all_solved">đã giải hết</string>
+    <string name="n_solved"> %s giải được</string>
+    <string name="n_unsolved"> %s ko giải được</string>
+    <string name="n_playing"> %s đang chơi</string>
+    <string name="solved">Đã giải</string>
+    <string name="playing">Đang chơi</string>
+    <string name="not_started">Chưa bắt đầu</string>
+    <string name="puzzles_saved">Sudoku đã được lưu vào trong \'%s\' thư mục.</string>
+    <string name="no_puzzles_found">Không tìm thấy sudoku.</string>
+    <string name="unknown_import_error">Unknown error occurred while importing puzzles, import was canceled.</string>
+    <string name="invalid_format">Invalid format, import was canceled.</string>
+    <string name="folders_created">%s folders have been imported.</string>
+    <string name="hint">Gợi ý</string>
+    <string name="close">Đóng</string>
+    <string name="clear">Xóa</string>
+    <string name="save">Lưu</string>
+    <string name="that_is_all">That\'s all</string>
+    <string name="first_run_hint">There are several input modes which you can use to fill in the puzzle. In order to help you get familiar with these modes there will be several hints displayed as you go through them.\n</string>
+    <string name="im_numpad_hint">You\'re now in the <i>Numpad</i> input mode. Press <i>Edit</i> button to toggle cell\'s note editing.\n</string>
+    <string name="im_disable_modes_hint">Please remember that you don\'t have to use all input modes. You can disable any of them in the game settings.\n\nYou can also use the keyboard and trackball to control the game. If you want to enter notes using keyboard, press number with alt or shift.\n</string>
+    <string name="help_text"><b>Keyboard controls</b>\n\nUse trackball to navigate to the desired cell and then press number on keyboard to fill in value. If you want to edit cell\'s note, press number with shift or alt.\n\n<b>Input modes</b>\n\nYou can switch between several input modes using button in the lower right corner of the screen. You can also disable any input mode in game settings - it will be completely hidden then.\n\n<b>Popup input mode</b>\n\nPopup dialog is shown when you tap the cell. You can edit cell\'s content using this dialog.\n\n<b>Single Number input mode</b>\n\nFirst select any number button by pressing it. Then just tap on cells in which you want to have selected number filled.\n\nUse <i>Pencil</i> button to toggle between cell\'s value and note editing.\n\n<b>Numpad input mode</b>\n\nButtons act as a standard numeric keyboard.\n\nUse <i>Pencil</i> button to toggle between cell\'s value and note editing.\n</string>
+    <string name="numpad">Numpad</string>
+    <string name="numpad_summary">Show numpad which acts as standard numeric keyobard.</string>
+    <string name="numpad_abbr">Num\nPad</string>
+    <string name="welcome">Xin chào</string>
+    <string name="undo">H.tác</string>
+    <string name="clear_all_notes">Xóa tất cả ghi chú</string>
+    <string name="fill_in_notes">hiện tất cả ghi chú</string>
+    <string name="restart">Chơi lại</string>
+    <string name="congrats">Chúc mừng, bạn đã giải sudoku trong %s.</string>
+    <string name="restart_confirm">Bạn có chắc muốn chơi lại?</string>
+    <string name="well_done">Rất tốt!</string>
+    <string name="clear_all_notes_confirm">Bạn có chắc muốn xóa tất cả các ghi chú?</string>
+    <string name="settings">Cài đặt</string>
+    <string name="game_settings">Cài đặt</string>
+    <!-- Strings added/changed in 1.1.2 -->
+    <string name="set_checkpoint">Đặt điểm kiểm tra</string>
+    <string name="undo_to_checkpoint">Trở lại trước lúc kiểm tra</string>
+    <string name="undo_to_checkpoint_confirm">Bạn có chắc muốn trở lại điểm trước lúc đặt diểm kiểm tra?</string>
+    <string name="at_time">vào %s</string>
+    <string name="yesterday_at_time">hôm qua vào lúc %s</string>
+    <string name="on_date">vào ngày %s</string>
+    <string name="last_played_at">Chơi lần cuối %s</string>
+    <string name="created_at">Được tạo %s</string>
+    <string name="level">Cấp độ: %s </string>
+    <string name="time">Thời gian: %s</string>
+    <string name="time_one">#1 - %s</string>
+    <string name="time_two">#2 - %s</string>
+    <string name="time_three">#3 - %s</string>
+    <string name="beginner_level">Người mới</string>
+    <string name="easy_level">Dễ</string>
+    <string name="medium_level">Bình thường</string>
+    <string name="hard_level">Khó</string>
+    <string name="expert_level">Chuyên gia</string>
+    <string name="legend_level">Huyền thoại</string>
+    <string name="note">Ghi chú</string>
+    <string name="howto">Sudoku là một loại trò chơi lôgic và cách chơi là điền số từ 1 đến 9 vào những ô trống sao cho mỗi cột dọc, mỗi hàng ngang, mỗi phân vùng nhỏ (ô 3x3) có đủ các số từ 1 đến 9 mà không được lặp lại.</string>
+    <string name="empty_sudoku">Hiện không còn sudoku cho cấp độ này, Hãy ấn phím quay lui và chơi thử ở  cấp độ khác </string>
+
+</resources>

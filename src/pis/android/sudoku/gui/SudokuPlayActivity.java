@@ -149,7 +149,8 @@ public class SudokuPlayActivity extends Activity {
 			ActionBar bar = getActionBar();
 			bar.setBackgroundDrawable(new ColorDrawable(getResources()
 					.getColor(R.color.main_color)));
-			bar.setTitle(mLevels[(int) mForderId - 1]);
+			bar.setTitle(getResources().getString(R.string.level,
+					mLevels[(int) mForderId - 1]));
 		}
 	}
 
@@ -206,13 +207,15 @@ public class SudokuPlayActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+		if (mSudokuGame != null) {
+			// we will save game to the database as we might not be able to get
+			// back
+			mDatabase.updateSudoku(mSudokuGame);
 
-		// we will save game to the database as we might not be able to get back
-		mDatabase.updateSudoku(mSudokuGame);
-
-		mGameTimer.stop();
-		mIMControlPanel.pause();
-		mIMControlPanelStatePersister.saveState(mIMControlPanel);
+			mGameTimer.stop();
+			mIMControlPanel.pause();
+			mIMControlPanelStatePersister.saveState(mIMControlPanel);
+		}
 	}
 
 	@Override
@@ -224,13 +227,15 @@ public class SudokuPlayActivity extends Activity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		mGameTimer.stop();
-		if (mSudokuGame.getState() == SudokuGame.GAME_STATE_PLAYING) {
-			mSudokuGame.pause();
-		}
+		if (mSudokuGame != null) {
+			mGameTimer.stop();
+			if (mSudokuGame.getState() == SudokuGame.GAME_STATE_PLAYING) {
+				mSudokuGame.pause();
+			}
 
-		mSudokuGame.saveState(outState);
-		mGameTimer.saveState(outState);
+			mSudokuGame.saveState(outState);
+			mGameTimer.saveState(outState);
+		}
 	}
 
 	@Override
@@ -275,8 +280,7 @@ public class SudokuPlayActivity extends Activity {
 			showDialog(DIALOG_RESTART);
 			return true;
 		case R.id.clear_all_notes:
-			// showDialog(DIALOG_CLEAR_NOTES);
-			mSudokuGame.fillInNotes();
+			 showDialog(DIALOG_CLEAR_NOTES);
 			return true;
 		case R.id.refresh:
 			// Chuyen sang game moi
@@ -346,6 +350,7 @@ public class SudokuPlayActivity extends Activity {
 									if (mShowTime) {
 										mGameTimer.start();
 									}
+									mIMNumpad.setEnableUndo(false);
 								}
 							}).setNegativeButton(android.R.string.no, null)
 					.create();
@@ -468,10 +473,24 @@ public class SudokuPlayActivity extends Activity {
 	};
 
 	private void createNewSudoku() {
-		// Save game cu lai
-		mDatabase.updateSudoku(mSudokuGame);
+		// Save game cu lai va huy sudoku game cu
+		if (mSudokuGame != null
+				&& mSudokuGame.getState() == SudokuGame.GAME_STATE_PLAYING) {
+			SudokuDatabase sudokuDatabase = new SudokuDatabase(
+					getApplicationContext());
+			mSudokuGame.pause();
+			sudokuDatabase.updateSudoku(mSudokuGame);
+			sudokuDatabase.close();
+			mSudokuGame = null;
+		}
 		mSudokuGameID = RandomSudoku.getInstance().randomSudokuGame(this,
 				mForderId);
+		if (mSudokuGameID == -1) {
+			createDialogEmpty();
+			mShowTime = false;
+			return;
+		}
+		// Tao sudoku game moi
 		mSudokuGame = SudokuGame.createEmptyGame();
 		mSudokuGame = mDatabase.getSudoku(mSudokuGameID);
 		mSudokuBoard.setReadOnly(false);
@@ -512,4 +531,19 @@ public class SudokuPlayActivity extends Activity {
 		super.finish();
 	}
 
+	public void createDialogEmpty() {
+		new AlertDialog.Builder(this)
+				.setIcon(android.R.drawable.ic_dialog_info)
+				.setTitle(R.string.no_puzzles)
+				.setMessage(getString(R.string.empty_sudoku))
+				.setPositiveButton(android.R.string.cancel,
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+							}
+						}).create().show();
+	}
 }

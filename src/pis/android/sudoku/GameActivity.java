@@ -27,6 +27,7 @@ public class GameActivity extends Activity implements OnClickListener {
 	private ButtonWithFont mResumeGame;
 	private ButtonWithFont mNewGame;
 	private ButtonWithFont mHighScore;
+	private ButtonWithFont mHowto;
 	private SudokuDatabase mDatabase;
 
 	@Override
@@ -42,6 +43,9 @@ public class GameActivity extends Activity implements OnClickListener {
 		mResumeGame.setOnClickListener(this);
 		mHighScore = (ButtonWithFont) findViewById(R.id.high_score);
 		mHighScore.setOnClickListener(this);
+		mHowto = (ButtonWithFont) findViewById(R.id.howto);
+		mHowto.setOnClickListener(this);
+		findViewById(R.id.about).setOnClickListener(this);
 		mDatabase = new SudokuDatabase(getApplicationContext());
 	}
 
@@ -81,6 +85,21 @@ public class GameActivity extends Activity implements OnClickListener {
 			startActivity(intent);
 			break;
 		}
+		case R.id.howto: {
+			new AlertDialog.Builder(this)
+					.setTitle(R.string.how_to)
+					.setMessage(getString(R.string.howto))
+					.setPositiveButton(android.R.string.cancel,
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									dialog.dismiss();
+								}
+							}).create().show();
+			break;
+		}
 		}
 	}
 
@@ -89,36 +108,4 @@ public class GameActivity extends Activity implements OnClickListener {
 		super.onDestroy();
 		mDatabase.close();
 	}
-
-	// private static class AdapterLevel extends ArrayAdapter<String> {
-	// private String[] mLevels;
-	// private LayoutInflater mLayoutInflater;
-	//
-	// public AdapterLevel(Context context, String[] levels) {
-	// super(context, R.layout.level_list_item, levels);
-	// mLevels = levels;
-	// mLayoutInflater = LayoutInflater.from(context);
-	// }
-	//
-	// @Override
-	// public View getView(int position, View convertView, ViewGroup parent) {
-	// Holder holder;
-	// if (convertView == null) {
-	// convertView = mLayoutInflater.inflate(R.layout.level_list_item,
-	// parent, false);
-	// holder = new Holder();
-	// holder.levelView = (TextViewWithFont) convertView
-	// .findViewById(R.id.level);
-	// convertView.setTag(holder);
-	// } else {
-	// holder = (Holder) convertView.getTag();
-	// }
-	// holder.levelView.setText(mLevels[position]);
-	// return convertView;
-	// }
-	//
-	// static class Holder {
-	// TextViewWithFont levelView;
-	// }
-	// }
 }

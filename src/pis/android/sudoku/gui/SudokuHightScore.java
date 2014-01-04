@@ -54,7 +54,7 @@ public class SudokuHightScore extends ListActivity {
 		if (mCursor != null) {
 			stopManagingCursor(mCursor);
 		}
-		for (int folderId = 1; folderId <= MAX_LEVEL; folderId++) {
+		for (int folderId = MAX_LEVEL; folderId >= 1; folderId--) {
 			mCursor = mDatabase.getSudokuCompleted(folderId);
 			try {
 				if (mCursor != null && mCursor.getCount() > 0) {
@@ -135,8 +135,8 @@ public class SudokuHightScore extends ListActivity {
 					.get(position);
 			sudokuHighScoreHoder.level
 					.setText(mLevels[sudokuHighScoreItem.level - 1]);
-			sudokuHighScoreHoder.totalCompleted
-					.setText(String.valueOf(sudokuHighScoreItem.totalCompleted));
+			sudokuHighScoreHoder.totalCompleted.setText(String
+					.valueOf(sudokuHighScoreItem.totalCompleted));
 			if (sudokuHighScoreItem.timeOne != 0) {
 				sudokuHighScoreHoder.timeOne.setText(mContext.getResources()
 						.getString(
@@ -145,8 +145,8 @@ public class SudokuHightScore extends ListActivity {
 										.format(sudokuHighScoreItem.timeOne)));
 			}
 			if (sudokuHighScoreItem.timeTwo != 0) {
-				sudokuHighScoreHoder.timeTwo
-						.setText(mContext.getResources().getString(
+				sudokuHighScoreHoder.timeTwo.setText(mContext.getResources()
+						.getString(
 								R.string.time_two,
 								mGameTimeFormatter
 										.format(sudokuHighScoreItem.timeTwo)));

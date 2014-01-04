@@ -7,7 +7,7 @@
     <string name="resume_game">Resume Game</string>
     <string name="new_game">New Game</string>
     <string name="hight_score">High Score</string>
-    <string name="help">Help</string>
+    <string name="how_to">How to</string>
     <string name="about">About</string>
     <!--  -->
     <string name="no_puzzles">No puzzles</string>
@@ -68,5 +68,8 @@
     <string name="hard_level">Hard</string>
     <string name="expert_level">Expert</string>
     <string name="legend_level">Legend</string>
+    <string name="note">Note</string>
+    <string name="howto">Fill in the grid so that every row, column, and 3x3 box contains digits 1 through 9</string>
+    <string name="empty_sudoku">No puzzles. Please press back and try other lever </string>
 
 </resources>

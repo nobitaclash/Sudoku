@@ -141,43 +141,45 @@ containing a value of this type.
         public static final int pencil_disabled=0x7f020004;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0020;
-        public static final int beginner_level=0x7f0b0014;
-        public static final int button_1=0x7f0b0008;
-        public static final int button_2=0x7f0b0009;
-        public static final int button_3=0x7f0b000a;
-        public static final int button_4=0x7f0b000c;
-        public static final int button_5=0x7f0b000d;
-        public static final int button_6=0x7f0b000e;
-        public static final int button_7=0x7f0b0010;
-        public static final int button_8=0x7f0b0011;
-        public static final int button_9=0x7f0b0012;
-        public static final int button_clear=0x7f0b000f;
-        public static final int clear_all_notes=0x7f0b0024;
-        public static final int easy_level=0x7f0b0015;
-        public static final int expert_level=0x7f0b0018;
-        public static final int hard_level=0x7f0b0017;
+        public static final int about=0x7f0b0004;
+        public static final int action_settings=0x7f0b0022;
+        public static final int beginner_level=0x7f0b0016;
+        public static final int button_1=0x7f0b000a;
+        public static final int button_2=0x7f0b000b;
+        public static final int button_3=0x7f0b000c;
+        public static final int button_4=0x7f0b000e;
+        public static final int button_5=0x7f0b000f;
+        public static final int button_6=0x7f0b0010;
+        public static final int button_7=0x7f0b0012;
+        public static final int button_8=0x7f0b0013;
+        public static final int button_9=0x7f0b0014;
+        public static final int button_clear=0x7f0b0011;
+        public static final int clear_all_notes=0x7f0b0026;
+        public static final int easy_level=0x7f0b0017;
+        public static final int expert_level=0x7f0b001a;
+        public static final int hard_level=0x7f0b0019;
         public static final int high_score=0x7f0b0002;
-        public static final int input_methods=0x7f0b001e;
-        public static final int last_played=0x7f0b001b;
-        public static final int legend_level=0x7f0b0019;
-        public static final int level=0x7f0b0003;
-        public static final int medium_level=0x7f0b0016;
-        public static final int newGame=0x7f0b0022;
+        public static final int howto=0x7f0b0003;
+        public static final int input_methods=0x7f0b0020;
+        public static final int last_played=0x7f0b001d;
+        public static final int legend_level=0x7f0b001b;
+        public static final int level=0x7f0b0005;
+        public static final int medium_level=0x7f0b0018;
+        public static final int newGame=0x7f0b0024;
         public static final int new_game=0x7f0b0001;
-        public static final int one=0x7f0b0004;
-        public static final int refresh=0x7f0b0021;
-        public static final int restart=0x7f0b0023;
+        public static final int one=0x7f0b0006;
+        public static final int refresh=0x7f0b0023;
+        public static final int restart=0x7f0b0025;
         public static final int resume_game=0x7f0b0000;
-        public static final int root_layout=0x7f0b001d;
-        public static final int sudoku_board=0x7f0b001c;
-        public static final int switch_num_note=0x7f0b000b;
-        public static final int three=0x7f0b0006;
-        public static final int time=0x7f0b001a;
-        public static final int time_label=0x7f0b001f;
-        public static final int total_completed=0x7f0b0007;
-        public static final int two=0x7f0b0005;
-        public static final int undo=0x7f0b0013;
+        public static final int root_layout=0x7f0b001f;
+        public static final int sudoku_board=0x7f0b001e;
+        public static final int switch_num_note=0x7f0b000d;
+        public static final int three=0x7f0b0008;
+        public static final int time=0x7f0b001c;
+        public static final int time_label=0x7f0b0021;
+        public static final int total_completed=0x7f0b0009;
+        public static final int two=0x7f0b0007;
+        public static final int undo=0x7f0b0015;
     }
     public static final class layout {
         public static final int activity_game_layout=0x7f030000;
@@ -211,6 +213,7 @@ containing a value of this type.
         public static final int congrats=0x7f080028;
         public static final int created_at=0x7f080035;
         public static final int easy_level=0x7f08003c;
+        public static final int empty_sudoku=0x7f080043;
         public static final int expert_level=0x7f08003f;
         public static final int fill_in_notes=0x7f080026;
         public static final int first_run_hint=0x7f08001c;
@@ -218,10 +221,11 @@ containing a value of this type.
         public static final int game_settings=0x7f08002d;
         public static final int hard_level=0x7f08003e;
         public static final int hello_world=0x7f080002;
-        public static final int help=0x7f080006;
         public static final int help_text=0x7f08001f;
         public static final int hight_score=0x7f080005;
         public static final int hint=0x7f080017;
+        public static final int how_to=0x7f080006;
+        public static final int howto=0x7f080042;
         public static final int im_disable_modes_hint=0x7f08001e;
         public static final int im_numpad_hint=0x7f08001d;
         public static final int invalid_format=0x7f080015;
@@ -235,10 +239,12 @@ containing a value of this type.
         public static final int n_unsolved=0x7f08000d;
         public static final int new_game=0x7f080004;
         /**   
+  
          */
         public static final int no_puzzles=0x7f080008;
         public static final int no_puzzles_found=0x7f080013;
         public static final int not_started=0x7f080011;
+        public static final int note=0x7f080041;
         public static final int numpad=0x7f080020;
         public static final int numpad_abbr=0x7f080022;
         public static final int numpad_summary=0x7f080021;
@@ -251,6 +257,7 @@ containing a value of this type.
         public static final int resume_game=0x7f080003;
         public static final int save=0x7f08001a;
         /**  Strings added/changed in 1.1.2 
+ Strings added/changed in 1.1.2 
          */
         public static final int set_checkpoint=0x7f08002e;
         public static final int settings=0x7f08002c;

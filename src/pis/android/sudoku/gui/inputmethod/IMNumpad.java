@@ -198,8 +198,6 @@ public class IMNumpad extends InputMethod {
 					}
 					break;
 				case MODE_EDIT_VALUE:
-					System.out.println("Trungth - mNumberButtonClick "
-							+ mGame.getCells().toString());
 					if (selNumber >= 0 && selNumber <= 9) {
 						mGame.setCellValue(selCell, selNumber);
 						if (isMoveCellSelectionOnPress()) {

@@ -372,8 +372,6 @@ public class SudokuDatabase {
 			if (c != null)
 				c.close();
 		}
-		System.out.println("Trungth - getSudoku end:="
-				+ s.getCells().toString());
 		return s;
 
 	}
