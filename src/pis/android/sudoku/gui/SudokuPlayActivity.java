@@ -20,6 +20,8 @@
 
 package pis.android.sudoku.gui;
 
+import java.io.OutputStream;
+
 import pis.android.sudoku.R;
 import pis.android.sudoku.db.SudokuDatabase;
 import pis.android.sudoku.game.SudokuGame;
@@ -36,13 +38,20 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore.Images;
+import android.provider.MediaStore.Images.Media;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -280,7 +289,7 @@ public class SudokuPlayActivity extends Activity {
 			showDialog(DIALOG_RESTART);
 			return true;
 		case R.id.clear_all_notes:
-			 showDialog(DIALOG_CLEAR_NOTES);
+			showDialog(DIALOG_CLEAR_NOTES);
 			return true;
 		case R.id.refresh:
 			// Chuyen sang game moi
@@ -331,8 +340,48 @@ public class SudokuPlayActivity extends Activity {
 										int which) {
 									createNewSudoku();
 								}
-							}).setNegativeButton(android.R.string.cancel, null)
-					.create();
+							})
+					.setNegativeButton(android.R.string.cancel, null)
+					.setNeutralButton(R.string.share,
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									Intent share = new Intent(
+											Intent.ACTION_SEND);
+									share.setType("image/jpeg");
+									ContentValues values = new ContentValues();
+									values.put(Images.Media.TITLE, "title");
+									values.put(Images.Media.MIME_TYPE,
+											"image/jpeg");
+									Uri uri = getContentResolver().insert(
+											Media.EXTERNAL_CONTENT_URI, values);
+
+									OutputStream outstream;
+									try {
+										outstream = getContentResolver()
+												.openOutputStream(uri);
+										View contentview = ((AlertDialog) dialog)
+												.findViewById(android.R.id.content);
+										Bitmap dialogview = loadBitmapFromView(contentview);
+										Bitmap rootView = loadBitmapFromView(mRootLayout
+												.getRootView());
+										Bitmap icon = overlay(rootView,
+												dialogview);
+										icon.compress(
+												Bitmap.CompressFormat.JPEG,
+												100, outstream);
+										outstream.close();
+									} catch (Exception e) {
+										System.err.println(e.toString());
+									}
+
+									share.putExtra(Intent.EXTRA_STREAM, uri);
+									startActivity(Intent.createChooser(share,
+											"Share Image"));
+								}
+							}).create();
 
 		case DIALOG_RESTART:
 			return new AlertDialog.Builder(this)
@@ -545,5 +594,24 @@ public class SudokuPlayActivity extends Activity {
 								dialog.dismiss();
 							}
 						}).create().show();
+	}
+
+	public Bitmap loadBitmapFromView(View v) {
+		Bitmap b = Bitmap.createBitmap(v.getMeasuredWidth(),
+				v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+		Canvas c = new Canvas(b);
+		v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
+		v.draw(c);
+		return b;
+	}
+
+	public static Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
+		Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(),
+				bmp1.getHeight(), bmp1.getConfig());
+		Canvas canvas = new Canvas(bmOverlay);
+		canvas.drawBitmap(bmp1, new Matrix(), null);
+		canvas.drawBitmap(bmp2, (bmp1.getWidth() - bmp2.getWidth()) / 2,
+				(bmp1.getHeight() - bmp2.getHeight()) / 2, null);
+		return bmOverlay;
 	}
 }

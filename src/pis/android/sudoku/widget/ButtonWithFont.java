@@ -26,7 +26,7 @@ public class ButtonWithFont extends Button {
 	public void customFont(Context context, AttributeSet attrs) {
 		TypedArray a = context.obtainStyledAttributes(attrs,
 				R.styleable.ViewWithFont, android.R.attr.buttonStyle, 0);
-		String font = a.getString(R.styleable.ViewWithFont_textFont);
+//		String font = a.getString(R.styleable.ViewWithFont_textFont);
 		Typeface typeface = Typeface.createFromAsset(context.getAssets(),
 				"fonts/DroidSans.ttf");
 		this.setTypeface(typeface);

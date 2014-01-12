@@ -9,6 +9,9 @@
     <string name="hight_score">Điểm cao</string>
     <string name="how_to">Cách chơi</string>
     <string name="about">Giới thiệu</string>
+    <string name="invite">Mời</string>
+    <string name="play_with_me">Chơi với mình nào: </string>
+    <string name="share">Chia sẻ</string>
     <!--  -->
     <string name="no_puzzles">Ko có sudoku</string>
     <string name="one_puzzle">1 sudoku </string>
@@ -44,7 +47,7 @@
     <string name="restart">Chơi lại</string>
     <string name="congrats">Chúc mừng, bạn đã giải sudoku trong %s.</string>
     <string name="restart_confirm">Bạn có chắc muốn chơi lại?</string>
-    <string name="well_done">Rất tốt!</string>
+    <string name="well_done">Chúc mừng!</string>
     <string name="clear_all_notes_confirm">Bạn có chắc muốn xóa tất cả các ghi chú?</string>
     <string name="settings">Cài đặt</string>
     <string name="game_settings">Cài đặt</string>

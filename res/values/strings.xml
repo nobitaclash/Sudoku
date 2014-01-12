@@ -9,6 +9,9 @@
     <string name="hight_score">High Score</string>
     <string name="how_to">How to</string>
     <string name="about">About</string>
+    <string name="invite">Invite</string>
+    <string name="play_with_me">Play with me: </string>
+    <string name="share">Share</string>
     <!--  -->
     <string name="no_puzzles">No puzzles</string>
     <string name="one_puzzle">1 puzzle</string>

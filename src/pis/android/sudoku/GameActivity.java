@@ -28,6 +28,7 @@ public class GameActivity extends Activity implements OnClickListener {
 	private ButtonWithFont mNewGame;
 	private ButtonWithFont mHighScore;
 	private ButtonWithFont mHowto;
+	private ButtonWithFont mInvite;
 	private SudokuDatabase mDatabase;
 
 	@Override
@@ -45,7 +46,8 @@ public class GameActivity extends Activity implements OnClickListener {
 		mHighScore.setOnClickListener(this);
 		mHowto = (ButtonWithFont) findViewById(R.id.howto);
 		mHowto.setOnClickListener(this);
-		findViewById(R.id.about).setOnClickListener(this);
+		mInvite = (ButtonWithFont) findViewById(R.id.invite);
+		mInvite.setOnClickListener(this);
 		mDatabase = new SudokuDatabase(getApplicationContext());
 	}
 
@@ -98,6 +100,20 @@ public class GameActivity extends Activity implements OnClickListener {
 									dialog.dismiss();
 								}
 							}).create().show();
+			break;
+		}
+		case R.id.invite: {
+			try {
+				Intent i = new Intent(Intent.ACTION_SEND);
+				i.setType("text/plain");
+				i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+				String sAux = "\n" + getString(R.string.play_with_me) + "\n";
+				sAux = sAux
+						+ "https://play.google.com/store/apps/details?id=pis.android.sudoku ";
+				i.putExtra(Intent.EXTRA_TEXT, sAux);
+				startActivity(Intent.createChooser(i, "choose one"));
+			} catch (Exception e) { // e.toString();
+			}
 			break;
 		}
 		}
